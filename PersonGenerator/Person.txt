@@ -1,0 +1,30 @@
+Personal Information:
+---------------------------
+First Name: Luann
+Last name: Norton
+Email: Luann.Norton633@hotmail.com
+Phone Number: 337-457-5847
+Birthday: May 11, 1984	(35 years old)
+Address: 640 Middle Way
+City: Scotland
+State: Missouri
+Zip Code: 63405-3142
+
+
+Sensitive info:
+---------------------------
+SSN: 606-21-3555
+Credit Card Provider: Mastercard
+Credit Card Number: 2285992566612875
+CVV2: 604
+Expires: 7/2024
+
+
+Demographic Information:
+---------------------------
+Marital Status: Single / Never Married
+Kids: None
+Ethnicity: Asian
+Level of Education: Highschool Diploma, GED or equivilant
+Blood Type: A+
+Hight: 6'0"
