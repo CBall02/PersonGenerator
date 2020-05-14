@@ -5,7 +5,7 @@
 using namespace std;
 
 
-int GenAreaCode(int randLine) {
+int GenAreaCode(const int &randLine) {
 	ifstream inFile;
 	inFile.open("AreaCodes.txt");
 	int AreaCodes[322];
@@ -19,6 +19,9 @@ int GenAreaCode(int randLine) {
 
 	return areaCode;
 }
+
+/*		
+				Unused code block
 
 string GenAreaState(int randNum, string areaState) {
 
@@ -36,6 +39,8 @@ string GenAreaState(int randNum, string areaState) {
 	return areaState;
 
 }
+*/
+
 
 int genPrefix() {
 	int prefix = randomNum(200, 999);

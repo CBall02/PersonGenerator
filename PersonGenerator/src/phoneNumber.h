@@ -1,8 +1,8 @@
 #pragma once
 
-int GenAreaCode(int randLine);
+int GenAreaCode(const int &randLine);
 
-std::string GenAreaState(int randNum, std::string areaState);
+///std::string GenAreaState(int randNum, std::string areaState);
 
 int genPrefix();
 

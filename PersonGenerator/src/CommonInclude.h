@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <algorithm>
-
+#include <set>
 
 #include "personStruct.h"
 extern Person person;

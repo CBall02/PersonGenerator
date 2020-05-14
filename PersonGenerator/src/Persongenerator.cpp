@@ -17,15 +17,15 @@ void RandomFirstName(string & first_name) { // allows the ability to return a st
 	first_name.clear();
 	ifstream myFile;
 	myFile.open("FirstNames.txt");
-	string names[1000]; // holds the 1000 names in the file.
+	string* fNames_Out = new string[1000]; // holds the 1000 names in the file on the heap.
 	int a = 0;
 	int randLine;
 	while (!myFile.eof()) {
-		getline(myFile, names[a]); // reads the names from the text file, into an array named "names[]."
+		getline(myFile, fNames_Out[a]); // reads the names from the text file, into an array named "names[]."
 		a++;
 	}
 	randLine = randomNum(0, 999); // gets a random number between 0, and 999.
-	first_name = names[randLine];
+	first_name = fNames_Out[randLine];
 	cout << "First Name: " << first_name << endl; // outputs first name
 	ofstream file;
 	file.open("Person.txt"); //open file
@@ -34,43 +34,65 @@ void RandomFirstName(string & first_name) { // allows the ability to return a st
 	file.close(); //close file
 	myFile.close();
 	//person.firstName = name;
+	delete[] fNames_Out;
 }
 
-void RandomKidsName(string & name) { // allows the ability to return a string
+
+
+void RandomFirstName_noOutput(string & name) { // allows the ability to return a string
 	name.clear();
 	ifstream myFile;
 	myFile.open("FirstNames.txt");
-	string names[1000]; // holds the 1000 names in the file.
-	string firstName;
+	string* fNames_NoOut = new string[1000]; // holds the 1000 names in the file on the heap.
 	int a = 0;
 	int randLine;
 	while (!myFile.eof()) {
-		getline(myFile, names[a]); // reads the names from the text file, into an array named "names[]."
+		getline(myFile, fNames_NoOut[a]); // reads the names from the text file, into an array named "names[]."
 		a++;
 	}
 	randLine = randomNum(0, 999); // gets a random number between 1, and 1000.
-	name = names[randLine];
+	name = fNames_NoOut[randLine];
+	delete[] fNames_NoOut;
 }
+
 
 void RandomLastName(string & last_name) { // allows the ability to return a string
 	last_name.clear();
 	ifstream myFile;
 	myFile.open("LastNames.txt");
-	string names[1000]; // holds the 1000 names in the file.
+	string* LName_out = new string[1000]; // holds the 1000 names in the file on the heap.
 	int a = 0;
 	int randLine;
 	while (!myFile.eof()) {
-		getline(myFile, names[a]); // reads the names from the text file, into an array named "names[]."
+		getline(myFile, LName_out[a]); // reads the names from the text file, into an array named "names[]."
 		a++;
 	}
 	randLine = randomNum(0, 999); // gets a random number between 1, and 1000.
-	last_name = names[randLine];
+	last_name = LName_out[randLine];
 	cout << "Last name: " << last_name << endl; // outputs last name
 	ofstream file;
 	file.open("Person.txt", ios::app);
 	file << "Last name: " << last_name << endl;
 	file.close();
 	myFile.close();
+	delete[] LName_out;
+}
+
+void RandomLastName_noOutput(string & name) { // allows the ability to return a string
+	name.clear();
+	ifstream myFile;
+	myFile.open("LastNames.txt");
+	string* LName_NoOut = new string[1000]; // holds the 1000 names in the file on the heap.
+	string firstName;
+	int a = 0;
+	int randLine;
+	while (!myFile.eof()) {
+		getline(myFile, LName_NoOut[a]); // reads the names from the text file, into an array named "names[]."
+		a++;
+	}
+	randLine = randomNum(0, 999); // gets a random number between 1, and 1000.
+	name = LName_NoOut[randLine];
+	delete[] LName_NoOut;
 }
 
 
@@ -118,7 +140,7 @@ void SSN() {
 }
 
 
-void Email(string FName, string LName) {
+void Email(const string &FName, const string &LName) {
 	ofstream file;
 	int rand_endNum, domain;
 	file.open("Person.txt", ios::app);
@@ -130,6 +152,7 @@ void Email(string FName, string LName) {
 	file.close();
 	person.email = FName + "." + LName + to_string(rand_endNum) + domains[domain];
 }
+
 
 void CreditCard() {
 	ifstream myFile;
@@ -175,13 +198,14 @@ void CreditCard() {
 	person.exp_year = year;
 }
 
+
 void Education() {
-	string education[] = {"Highschool Diploma, GED or equivilant","Some College", "Associate degree", "Bachelor's degree", "Master's Degree", "Doctoral Degree or PHD."};
+	string education[] = {"High school Diploma, GED or equivalent","Some College", "Associate degree", "Bachelor's degree", "Master's Degree", "Doctoral Degree or PHD."};
 	int LevelOfEducation;
 	if (person.age < 20) { //Max of some college
 		LevelOfEducation = randomNum(0, 1);
 	}
-	else if (person.age <= 21 && person.age >= 20) { //Max of an assosiates
+	else if (person.age <= 21 && person.age >= 20) { //Max of an associates
 		LevelOfEducation = randomNum(0, 2);
 	}
 	else if (person.age <= 24 && person.age >21) { //Max of Bachelor's
@@ -199,6 +223,7 @@ void Education() {
 	file << "Level of Education: " << education[LevelOfEducation] << endl;
 	file.close();
 }
+
 
 void Race() {
 	string race[] = { "White", "Asian", "Black", "Hispanic or Latino" };
@@ -227,17 +252,19 @@ void Hight() {
 	file << "Hight: " << person.hight_Feet << "\'" << person.hight_Inches << "\"" << endl;
 	file.close();
 }
+
 void BloodType() {
 	string type[] = { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
-	int randNum;
-	randNum = randomNum(0, 7); // gets a random number between 0 and 4
-	cout << "Blood Type: " << type[randNum] << endl;
+	int randType;
+	randType = randomNum(0, 7); // gets a random number between 0 and 4
+	cout << "Blood Type: " << type[randType] << endl;
 	ofstream file;
 	file.open("Person.txt", ios::app);
-	file << "Blood Type: " << type[randNum] << endl;
+	file << "Blood Type: " << type[randType] << endl;
 	file.close();
-	person.blood_type = type[randNum];
+	person.blood_type = type[randType];
 }
+
 
 #define MAX_AGE 40
 #define MIN_AGE 20
@@ -256,24 +283,25 @@ void genBirthday_Age() {
 	file << "Birthday: " << months[month] << " " << day << ", " << year;
 	file << "\t(" << differenceInYears << " years old)" << endl;
 	file.close();
+
 	person.age = differenceInYears;
 	person.birthDay = day;
 	person.birthMonth = months[month];
 	person.birthYear = year;
 }
 
-vector<string> generateKids(int numberOfKids, string lastName) {
+vector<string> generateKids(const int &numberOfKids, const string &lastName) {
 	vector<string> kidsNames;
 	for (int i = 0; i < numberOfKids; i++) {
 		string kidsname;
-		RandomKidsName(kidsname);
+		RandomFirstName_noOutput(kidsname);
 		kidsname += " " + lastName;
 		kidsNames.push_back(kidsname);
 	}
 	return kidsNames;
 }
 
-void maritalStatus_Kids(string lastName) {
+void maritalStatus_Kids(const string &lastName) {
 	ofstream file;
 	file.open("Person.txt", ios::app);
 	string status[] = { "Single / Never Married", "Married", "Divorced"};
@@ -309,11 +337,14 @@ void maritalStatus_Kids(string lastName) {
 	file.close();
 }
 
-#define NUM_OF_ADDRESSES 316
+
 void GenAddress() {
+	const int NUM_OF_ADDRESSES = 316;
+
 	string textFile = "StreetAddresses.xml";
 	vector<string> allInformation = parseAddressXML(textFile); //parse file and output to vector
 	int randAddress = randomNum(0, 315);
+	//Outputs one of the random addresses, with each section of it
 	cout << "Address: " << allInformation.at(randAddress) << endl;
 	cout << "City: " << allInformation.at(randAddress + NUM_OF_ADDRESSES) << endl;
 	cout << "State: " << allInformation.at(randAddress + (2 * (NUM_OF_ADDRESSES))) << endl;
@@ -325,15 +356,63 @@ void GenAddress() {
 	file << "State: " << allInformation.at(randAddress + (2 * (NUM_OF_ADDRESSES))) << endl;
 	file << "Zip Code: " << allInformation.at(randAddress + (3 * (NUM_OF_ADDRESSES))) << endl;
 	file.close();
+	
+	//Save each section of address to person
 	person.streetAddress = allInformation.at(randAddress);
 	person.city = allInformation.at(randAddress + NUM_OF_ADDRESSES);
 	person.state = allInformation.at(randAddress + (NUM_OF_ADDRESSES * 2));
 	person.zipcode = allInformation.at(randAddress + (NUM_OF_ADDRESSES * 3));
 }
 
+//Needs work
+void securityQuestions() {
+	const int maxQuestions = 3; //defines max # of security questions
+	const int questionOptions = 3; //defines how many question options there are
 
 
-int main(void) {
+
+	//Get maxQuestion number of unique random numbers
+	set<unsigned> questionNumbers;
+	while (questionNumbers.size() < maxQuestions) {
+		questionNumbers.insert(randomNum(0, questionOptions - 1));
+	}
+
+	//Create a vector and copy set into it
+	vector<unsigned> randQuestion_number(questionNumbers.size());
+	copy(questionNumbers.begin(), questionNumbers.end(), randQuestion_number.begin());
+
+	//For as many as there are in maxQuestions, determine which one and execute its code
+	for (int i = 0; i < maxQuestions; i++) {
+		switch (randQuestion_number.at(i)) {
+		case 0: {
+			cout << "What street did you live on in third grade?\n";
+			string answers[] = { "Pine Street", "Maple Drive", "Elm Drive", "Lakeview Circle" };
+			int randAnswer = randomNum(0, 3);
+			cout << "\t" << answers[randAnswer] << endl;
+			break;
+		}
+		case 1: {
+			cout << "What is the last name of the teacher who gave you your first failing grade?\n";
+			string lastName;
+			RandomLastName_noOutput(lastName);
+			cout << "\t" << lastName << endl;
+			break;
+		}
+		case 2: {
+			cout << "What is your grandmother's first name?\n";
+			string firstName;
+			RandomFirstName_noOutput(firstName);
+			cout << "\t" << firstName << endl;
+			break;
+		}
+		default: //any other option (there shouldn't be one)
+
+			break;
+		}
+	}
+}
+
+int main() {
 	findCurrentDate(person.currentDay, person.currentMonth, person.currentYear);
 	ofstream file;
 	file.open("Person.txt", ios::app);
@@ -359,8 +438,9 @@ int main(void) {
 	Education(); //Random Level of Education
 	BloodType(); //Random Blood Type
 	Hight(); //Random Hight
-	cin.get();
-	//system("pause");
 	file.close();
+	//system("pause");
+	//securityQuestions();
+	cin.get();
 	return 0;
 }
